@@ -13,10 +13,23 @@ describe('Counter', () => {
         expect(wraper.vm.count).toBe(0);
     });
     
-    it('increments the count when the button is clicked', () => {
+    it('increments the count when the increment button is clicked', () => {
         expect(wraper.vm.count).toBe(0);
-        wraper.find('button').trigger('click');
+        wraper.find('.increment').trigger('click');
         expect(wraper.vm.count).toBe(1);
+    });
+
+    it('decrements the count when the decrement button is clicked', () => {
+        wraper.setData({count: 5});
+        wraper.find('.decrement').trigger('click');
+        expect(wraper.vm.count).toBe(4);
+    });
+    
+    it.only('never goes below cero', () => {
+        expect(wraper.vm.count).toBe(0);
+        expect(wraper.find('.decrement').hasStyle('display', 'none')).toBe(true);
+        wraper.find('.increment').trigger('click');
+        expect(wraper.find('.decrement').hasStyle('display', 'none')).toBe(false);
     });
     
     it('presents the current count', () => {
